@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# React Markdown Remark Directive
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a plugin for react-markdown.
 
-## Available Scripts
+It uses the directive format to easily add custom functionality into your markdown via remark-directive.
 
-In the project directory, you can run:
+If the tag is one of the included components, it will render the element
 
-### `npm start`
+To use, simply add incluced plugin and render when calling ReactMarkdown
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```jsx
+import ReactMarkdown from 'react-markdown'
+import rmDirective from '../react-markdown-remark-directive'
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+// Object of custom Markdown components
+const components = {}
 
-### `npm test`
+// Array of ReactMarkdown plugins
+const rmPlugins = [
+    // ... other plugins for ReactMarkdown
+    [rmDirective.plugin, {components}],
+]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+// Object of ReactMarkdown renderers
+const rmRenderers = {
+    // ... other rendrers for ReactMarkdown
+}
+Object.assign(rmRenderers, rmDirective.renderer)
 
-### `npm run build`
+// Expected result:
+// <tag foo="bar" foofoo="barbar">value</tag>
+const markdownCode = ":tag[value]{foo=bar foofoo=barbar}"
+<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Valid React
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+// include above code
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const Welcome = (attr) => {
+    console.log(attr)
+    return (
+        <>
+            {attr.greeting} to you {attr.name}, {attr.value}!
+        </>
+    )
+}
+Object.assign(components, Welcome) // Or add it in the original object
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const markdownCode = "::Welcome[nice to meet you]{greeting=Hello name=Rob}"
+<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Generated React
+```jsx
+<Welcome greeting="Hello" name="Rob">nice to meet you</Welcome>
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Rendered Html
+```
+Hello to you Rob, nice to meet you!
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Invalid React
 
-## Learn More
+If a valid React component was not included, it will simply render it as valid Html
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+// include above code
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+const markdownCode = ":tag[value]{attr1=val1 attr2=val2}"
+<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+```
 
-### Code Splitting
+Generated Html
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```html
+<tag attr1="val1" attr2="val2">value</tag>
+```
 
-### Analyzing the Bundle Size
+Rendered Html
+```
+value
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Next steps
+Currently, this plugin does not iterate through the children and render them all. This will eventually be included.
