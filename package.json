@@ -17,5 +17,9 @@
   },
   "scripts": {
     "format": "remark . -qfo --ignore-pattern test/"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/rjantoine/react-markdown-remark-directive"
   }
 }
