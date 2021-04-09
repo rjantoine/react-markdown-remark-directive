@@ -10,7 +10,7 @@ To use, simply add incluced plugin and render when calling ReactMarkdown
 
 ```jsx
 import ReactMarkdown from 'react-markdown'
-import rmDirective from '../react-markdown-remark-directive'
+import rmDirective from 'react-markdown-remark-directive'
 
 // Object of custom Markdown components
 const components = {}
