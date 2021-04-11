@@ -10,7 +10,7 @@ To use, simply add incluced plugin and render when calling ReactMarkdown
 
 ```jsx
 import ReactMarkdown from 'react-markdown'
-import rmDirective from 'react-markdown-remark-directive'
+import rmDirective from '../react-markdown-remark-directive'
 
 // Object of custom Markdown components
 const components = {}
@@ -21,16 +21,10 @@ const rmPlugins = [
     [rmDirective.plugin, {components}],
 ]
 
-// Object of ReactMarkdown renderers
-const rmRenderers = {
-    // ... other rendrers for ReactMarkdown
-}
-Object.assign(rmRenderers, rmDirective.renderer)
-
 // Expected result:
 // <tag foo="bar" foofoo="barbar">value</tag>
 const markdownCode = ":tag[value]{foo=bar foofoo=barbar}"
-<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+    <ReactMarkdown plugins={rmPlugins} source={markdownCode} />
 ```
 
 ## Valid React
@@ -50,7 +44,7 @@ Object.assign(components, Welcome) // Or add it in the original object
 
 
 const markdownCode = "::Welcome[nice to meet you]{greeting=Hello name=Rob}"
-<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+    <ReactMarkdown plugins={rmPlugins} source={markdownCode} />
 ```
 
 Generated React
@@ -71,7 +65,7 @@ If a valid React component was not included, it will simply render it as valid H
 // include above code
 
 const markdownCode = ":tag[value]{attr1=val1 attr2=val2}"
-<ReactMarkdown plugins={rmPlugins} renderers={rmRenderers} source={markdownCode} />
+    <ReactMarkdown plugins={rmPlugins} source={markdownCode} />
 ```
 
 Generated Html
@@ -85,5 +79,5 @@ Rendered Html
 value
 ```
 
-## Next steps
-Currently, this plugin does not iterate through the children and render them all. This will eventually be included.
+## Updates
+v1.1.0 Adds ability to render the children.
