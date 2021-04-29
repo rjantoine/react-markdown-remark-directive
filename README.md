@@ -18,7 +18,7 @@ const components = {}
 // Array of ReactMarkdown plugins
 const rmPlugins = [
     // ... other plugins for ReactMarkdown
-    [rmDirective.plugin, {components}],
+    [rmDirective, {components}],
 ]
 
 // Expected result:
