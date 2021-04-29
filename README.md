@@ -70,6 +70,7 @@ const markdownCode = ":tag[value]{attr1=val1 attr2=val2}"
 
 Generated Html
 
+
 ```html
 <tag attr1="val1" attr2="val2">value</tag>
 ```

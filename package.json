@@ -1,6 +1,6 @@
 {
   "name": "react-markdown-remark-directive",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Adds the remark-directive to react-markdown",
   "main": "index.js",
   "author": "Robert Antoine",
